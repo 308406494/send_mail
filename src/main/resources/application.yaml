@@ -1,0 +1,66 @@
+scheduled:
+  sendmail:
+    cron: 0 */1 * * * ?
+    toAddress: 13658206101@163.com
+    fromAddress: xie.bowen@ustcinfo.com
+feign:
+  hystrix:
+    enabled: true
+    timeout: 60000
+  http:
+    connectTimeoutMillis: 60000
+    readTimeoutMillis: 60000
+  platformBaseUrl: http://192.168.156.178:8080/platform
+spring:
+  datasource:
+    crm:
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        maxLifetime: 1765000
+        maximumPoolSize: 15
+      url: jdbc:oracle:thin:@192.168.156.243:1521:ccmpapp
+      driver-class-name: oracle.jdbc.OracleDriver
+      #username: custinfo
+      username: custinfo
+      #password: custinfo
+      password: custinfo
+      maximum-pool-size: 10
+      auto-commit: true
+      mapperLocations: classpath:mybatis/mapper/crm/**/*Mapper.xml
+    common:
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        maxLifetime: 1765000
+        maximumPoolSize: 15
+      url: jdbc:oracle:thin:@192.168.156.243:1521:ccmpapp
+      driver-class-name: oracle.jdbc.OracleDriver
+      #username: common
+      username: common
+      #password: common
+      password: common
+      maximum-pool-size: 10
+      auto-commit: true
+      mapperLocations: classpath:mybatis/mapper/common/**/*Mapper.xml
+    common-stat:
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        maxLifetime: 1765000
+        maximumPoolSize: 15
+      url: jdbc:oracle:thin:@192.168.156.243:1521:ccmpapp
+      driver-class-name: oracle.jdbc.OracleDriver
+      #username: billinfo
+      username: billinfo
+      #password: billinfo
+      password: billinfo
+      maximum-pool-size: 10
+      auto-commit: true
+      mapperLocations: classpath:mybatis/mapper/common-stat/**/*Mapper.xml
+  mail:
+    host: mail.ustcinfo.com
+    username: xie.bowen
+    password: waFP26
+    enable: true
+    filePath: C:/Users/13658/IdeaProjects/send_mail
+logging:
+  level:
+    root: debug

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.ccmp.sendmail.mapper.crm.CrmMapper">
+
+    <resultMap id="InfoDtoMap" type="com.ccmp.sendmail.bean.InfoDto">
+        <result property="province" column="省份"></result>
+        <result property="custName" column="集团名称"></result>
+        <result property="custCode" column="集团编码"></result>
+        <result property="testNum" column="可测试"></result>
+        <result property="activeNum" column="已激活"></result>
+        <result property="otherNum" column="其它"></result>
+        <result property="todayNew" column="当日新增"></result>
+        <result property="todayDis" column="当日已销户"></result>
+        <result property="count" column="合计用户数"></result>
+    </resultMap>
+    
+    <select id="getInfoReport" resultMap="InfoDtoMap">
+        select
+            case a.be_id
+                when '000' then '全网平台'
+                when '001' then '政企公司'
+                when '002' then '物联网公司'
+                when '100' then '北京移动'
+                when '200' then '广东移动'
+                when '210' then '上海移动'
+                when '220' then '天津移动'
+                when '230' then '重庆移动'
+                when '240' then '辽宁移动'
+                when '250' then '江苏移动'
+                when '270' then '湖北移动'
+                when '280' then '四川移动'
+                when '290' then '陕西移动'
+                when '311' then '河北移动'
+                when '351' then '山西移动'
+                when '371' then '河南移动'
+                when '431' then '吉林移动'
+                when '451' then '黑龙江移动'
+                when '471' then '内蒙移动'
+                when '531' then '山东移动'
+                when '551' then '安徽移动'
+                when '571' then '浙江移动'
+                when '591' then '福建移动'
+                when '731' then '湖南移动'
+                when '771' then '广西移动'
+                when '791' then '江西移动'
+                when '851' then '贵州移动'
+                when '871' then '云南移动'
+                when '891' then '西藏移动'
+                when '898' then '海南移动'
+                when '931' then '甘肃移动'
+                when '951' then '宁夏移动'
+                when '971' then '青海移动'
+                when '991' then '新疆移动'
+                else '中国移动'
+            end 省份 ,
+            a.cust_name 集团名称,
+            a.cust_code 集团编码,
+            sum(case b.status when 6 then 1 else 0 end) 可测试,
+            sum(case b.status when 2 then 1 else 0 end) 已激活,
+            sum(case when b.status in (2,6) then 0 else 1 end) 其它,
+            sum(case to_char(b.create_time,'yyyymmdd') when to_char(sysdate-1,'yyyymmdd') then 1 else 0 end ) 当日新增,
+            sum(case to_char(b.create_time,'yyyymmdd') when to_char(sysdate-1,'yyyymmdd') then case b.status when 9 then 1  else 0 end else 0 end ) 当日已销户,
+            count(*)  合计用户数
+            from cm_customer a left join  cm_subscriber b on a.cust_id = b.cust_id
+            where a.cust_name not like '%测试%'
+            group by a.cust_id,a.be_id,a.cust_name,a.cust_code
+            order by 合计用户数 desc
+    </select>
+</mapper>
