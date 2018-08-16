@@ -26,7 +26,6 @@ spring:
       password: custinfo
       maximum-pool-size: 10
       auto-commit: true
-      mapperLocations: classpath:mybatis/mapper/crm/**/*Mapper.xml
     common:
       type: com.zaxxer.hikari.HikariDataSource
       hikari:
@@ -40,7 +39,6 @@ spring:
       password: common
       maximum-pool-size: 10
       auto-commit: true
-      mapperLocations: classpath:mybatis/mapper/common/**/*Mapper.xml
     common-stat:
       type: com.zaxxer.hikari.HikariDataSource
       hikari:
@@ -54,13 +52,14 @@ spring:
       password: billinfo
       maximum-pool-size: 10
       auto-commit: true
-      mapperLocations: classpath:mybatis/mapper/common-stat/**/*Mapper.xml
   mail:
     host: mail.ustcinfo.com
     username: xie.bowen
     password: waFP26
     enable: true
     filePath: C:/Users/13658/IdeaProjects/send_mail
+    properties:
+      mail.mime.splitlongparameters: false
 logging:
   level:
     root: debug

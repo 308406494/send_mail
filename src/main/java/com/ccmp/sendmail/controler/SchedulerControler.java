@@ -7,6 +7,7 @@ import com.ccmp.sendmail.config.feign.pltform.model.PltResponse;
 import com.ccmp.sendmail.config.feign.pltform.model.TaskRequest;
 import com.ccmp.sendmail.mapper.crm.CrmMapper;
 import com.ccmp.sendmail.utils.ExcelUtils;
+import com.ccmp.sendmail.utils.MailUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,7 +126,7 @@ public class SchedulerControler {
                         e.printStackTrace();
                     }
                     ExcelUtils.exportExcel(excelData, fos);
-                    sendSimpleMail(sendAddress,content, file);
+                    MailUtils.sendMail(javaMailSender, sendAddress,fromAddress, content, file);
                 } else
                     logger.info("邮件发送失败！！");
             }
@@ -160,26 +161,6 @@ public class SchedulerControler {
             return startContent.append(titleContent).append(endContet).toString();
         }
 
-
-
-        private void sendSimpleMail(String sendAddress, String content,File file){
-            MimeMessage message = null;
-            try {
-                message = javaMailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-                helper.setFrom(fromAddress);
-                helper.setTo(sendAddress.trim());
-                String[] lines = content.split("\\|");
-                helper.setSubject(lines[0]);
-                helper.setText(lines[1], true);
-                logger.info(file.getName());
-                helper.addAttachment(file.getName(), new FileSystemResource(file));
-                javaMailSender.send(message);
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-        }
 
         /**
          * 公共平台发送功能
