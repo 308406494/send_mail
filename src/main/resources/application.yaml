@@ -18,12 +18,10 @@ spring:
       hikari:
         maxLifetime: 1765000
         maximumPoolSize: 15
-      url: jdbc:oracle:thin:@192.168.156.243:1521:ccmpapp
+      url: jdbc:oracle:thin:@
       driver-class-name: oracle.jdbc.OracleDriver
-      #username: custinfo
-      username: custinfo
-      #password: custinfo
-      password: custinfo
+      username:
+      password:
       maximum-pool-size: 10
       auto-commit: true
     common:
@@ -31,12 +29,10 @@ spring:
       hikari:
         maxLifetime: 1765000
         maximumPoolSize: 15
-      url: jdbc:oracle:thin:@192.168.156.243:1521:ccmpapp
+      url: jdbc:oracle:thin:@
       driver-class-name: oracle.jdbc.OracleDriver
-      #username: common
-      username: common
-      #password: common
-      password: common
+      username:
+      password:
       maximum-pool-size: 10
       auto-commit: true
     common-stat:
@@ -44,12 +40,10 @@ spring:
       hikari:
         maxLifetime: 1765000
         maximumPoolSize: 15
-      url: jdbc:oracle:thin:@192.168.156.243:1521:ccmpapp
+      url: jdbc:oracle:thin:@
       driver-class-name: oracle.jdbc.OracleDriver
-      #username: billinfo
-      username: billinfo
-      #password: billinfo
-      password: billinfo
+      username:
+      password:
       maximum-pool-size: 10
       auto-commit: true
   mail:
